@@ -3,6 +3,7 @@ package FlowerStore;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,7 @@ private Button buttonBouquetBeautiful;
 
 private int walletFlowerStore = 0;
 private Label pictureFlowers;
+private Button buttonEmptyWallet;
 
 FlowerStore() {
 
@@ -30,6 +32,7 @@ FlowerStore() {
     this.buttonBouquetBeautiful = new Button(" Красивый букет !");
 
     this.pictureFlowers = new Label ();
+    this.buttonEmptyWallet = new Button("Очистить счет");
 }
 
 
@@ -47,6 +50,7 @@ FlowerStore() {
         dropShadow1.setColor(Color.color(0.4, 0.5, 0.5));
         buttonBouquetUsual.setEffect(dropShadow1);
         buttonBouquetBeautiful.setEffect(dropShadow1);
+        buttonEmptyWallet.setEffect(dropShadow1);
 
         String setStyleForButtons = "-fx-background-color: \n" +
                 "        rgba(0,0,0,0.08),\n" +
@@ -60,6 +64,17 @@ FlowerStore() {
         buttonBouquetUsual.setStyle(setStyleForButtons);
         buttonBouquetBeautiful.setStyle(setStyleForButtons);
 
+        String setStyleForbuttonEmptyWallet = "-fx-background-color: \n" +
+                "        #c3c4c4,\n" +
+                "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);\n" +
+                "    -fx-background-radius: 30;\n" +
+                "    -fx-background-insets: 0,1,1;\n" +
+                "    -fx-text-fill: black;\n" +
+                "    -fx-font-size: 14px;" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );";
+        buttonEmptyWallet.setStyle(setStyleForbuttonEmptyWallet);
+
         try {
         this.buttonBouquetUsual.setGraphic(addImageToButton("resourses/button_flowers_usual.png"));
         this.buttonBouquetBeautiful.setGraphic(addImageToButton("resourses/button_flowers.png"));
@@ -68,39 +83,56 @@ FlowerStore() {
         }
 
 
+        buttonBouquetUsual.setOnAction(e -> {
+                    try {
+
+                    } catch (Exception ignored) {
+                    }
+                }
+        );
+
+        buttonBouquetBeautiful.setOnAction(e -> {
+                    try {
+
+                    } catch (Exception ignored) {
+                    }
+                }
+        );
+
+
+        buttonEmptyWallet.setOnAction(e -> {
+                    try {
+
+                    } catch (Exception ignored) {
+                    }
+        }
+        );
 
 
         VBox vbox0 = new VBox();
         vbox0.getChildren().addAll(new Label("                     \n\n"));
 
-        HBox hbox1 = new HBox();
-        hbox1.getChildren().addAll(buttonBouquetUsual);
-
-        HBox hbox2 = new HBox();
-        hbox2.getChildren().addAll(buttonBouquetBeautiful);
-
-
         centerPane.add(vbox0, 2, 1);
         centerPane.add(new Label("            \n\n\n"), 3, 2);
-
-        centerPane.add(hbox1, 5,3);   //  Вывод кнопок <букетов> на экран
+        centerPane.add(buttonBouquetUsual, 5,3);   //  Вывод кнопок <букетов> на экран
         centerPane.add(new Label("            \n\n"), 4, 5);
         centerPane.add(new Label("            \n\n"), 4, 8);
-        centerPane.add(hbox2, 5,10);
+        centerPane.add(buttonBouquetBeautiful, 5,10);
+
+        centerPane.add(new Label("            \n\n\n\n\n\n\n"), 4, 13);
+        centerPane.add(buttonEmptyWallet, 18,15);   //  Вывод кнопки обнуления счета на экран
 
         root.setCenter(centerPane);
 
         primaryStage.setTitle("Flower Menu ");
-        primaryStage.setScene(new Scene(root, 800, 550));
+        primaryStage.setScene(new Scene(root, 850, 550));
         primaryStage.centerOnScreen();
         primaryStage.show();
-
-
 
     }
 
 
-    public ImageView addImageToButton(String stringPathToResourse) throws IOException {
+    private ImageView addImageToButton(String stringPathToResourse) throws IOException {
 
         ImageView imageView = null;
         InputStream input = null;
@@ -115,6 +147,36 @@ FlowerStore() {
             if (input != null) { input.close(); }
         }
         return imageView;
+    }
+
+
+
+    public Integer convertTextToInteger (Stage primaryStage, TextField TextString) {
+        Integer integerValue;
+        int value = 0;
+
+        String StringToConvert = TextString.getText();
+
+        try {
+            value = Integer.parseInt(StringToConvert);
+        }
+        catch (Exception ex) {
+            System.out.println("Вы ввели что-то не то (или оставили поля незаполненными) !");
+            ExeptionHandler exeption = new ExeptionHandler();
+            exeption.exceptionWindowShow(primaryStage);
+        }
+
+        if (value < 0) {
+            value = -(value);   //  Заказ отрицательных чисел цветов будем считать сбоем в Матрице, а не тонким намеком
+        }
+
+        if (value > 500) {
+            value = 500;      //  Все же количество цветов в магазине ограничено размером помещения
+        }
+
+        integerValue = (Integer) (value);
+
+        return integerValue;
     }
 
 }
