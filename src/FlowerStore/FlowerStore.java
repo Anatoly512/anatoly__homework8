@@ -64,7 +64,7 @@ FlowerStore() {
         buttonBouquetUsual.setStyle(setStyleForButtons);
         buttonBouquetBeautiful.setStyle(setStyleForButtons);
 
-        String setStyleForbuttonEmptyWallet = "-fx-background-color: \n" +
+        String setStyleForButtonEmptyWallet = "-fx-background-color: \n" +
                 "        #c3c4c4,\n" +
                 "        linear-gradient(#d6d6d6 50%, white 100%),\n" +
                 "        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);\n" +
@@ -73,7 +73,7 @@ FlowerStore() {
                 "    -fx-text-fill: black;\n" +
                 "    -fx-font-size: 14px;" +
                 "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );";
-        buttonEmptyWallet.setStyle(setStyleForbuttonEmptyWallet);
+        buttonEmptyWallet.setStyle(setStyleForButtonEmptyWallet);
 
         try {
         this.buttonBouquetUsual.setGraphic(addImageToButton("resourses/button_flowers_usual.png"));
