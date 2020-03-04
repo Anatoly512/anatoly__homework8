@@ -3,23 +3,31 @@ package FlowerStore;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class FlowerStore extends BorderPane {
 
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
 
+private int walletFlowerStore = 0;
 private Label pictureFlowers;
 
 FlowerStore() {
 
-    this.buttonBouquetUsual = new Button("Обычный букет !");
-    this.buttonBouquetBeautiful = new Button("Красивый букет !");
+    this.buttonBouquetUsual = new Button(" Обычный букет !");
+    this.buttonBouquetBeautiful = new Button(" Красивый букет !");
 
     this.pictureFlowers = new Label ();
 }
@@ -30,8 +38,37 @@ FlowerStore() {
         System.out.println("Flower Menu!");
 
         BorderPane root = new BorderPane();
-
         GridPane centerPane = new GridPane();
+
+        DropShadow dropShadow1 = new DropShadow();
+        dropShadow1.setRadius(5.0);
+        dropShadow1.setOffsetX(3.0);
+        dropShadow1.setOffsetY(3.0);
+        dropShadow1.setColor(Color.color(0.4, 0.5, 0.5));
+        buttonBouquetUsual.setEffect(dropShadow1);
+        buttonBouquetBeautiful.setEffect(dropShadow1);
+
+        String setStyleForButtons = "-fx-background-color: \n" +
+                "        rgba(0,0,0,0.08),\n" +
+                "        linear-gradient(#93FFE8, #32ccbc),\n" +
+                "        linear-gradient(#90f7ec 0%,#57FEFF 10%, #32ccbc 50%, #32ccbc 51%, #0fb4e7 100%);\n" +
+                "    -fx-background-insets: 0 0 -1 0,0,1;\n" +
+                "    -fx-background-radius: 5,5,4;\n" +
+                "    -fx-padding: 3 30 3 30;\n" +
+                "    -fx-text-fill: #242d35;\n" +
+                "    -fx-font-size: 17px";
+        buttonBouquetUsual.setStyle(setStyleForButtons);
+        buttonBouquetBeautiful.setStyle(setStyleForButtons);
+
+        try {
+        this.buttonBouquetUsual.setGraphic(addImageToButton("resourses/button_flowers_usual.png"));
+        this.buttonBouquetBeautiful.setGraphic(addImageToButton("resourses/button_flowers.png"));
+        }
+        catch (Exception ignored) {  //  <ignored>  потому что в методе addImageToButton уже есть обработчик исключений
+        }
+
+
+
 
         VBox vbox0 = new VBox();
         vbox0.getChildren().addAll(new Label("                     \n\n"));
@@ -54,7 +91,7 @@ FlowerStore() {
         root.setCenter(centerPane);
 
         primaryStage.setTitle("Flower Menu ");
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setScene(new Scene(root, 800, 550));
         primaryStage.centerOnScreen();
         primaryStage.show();
 
@@ -63,6 +100,21 @@ FlowerStore() {
     }
 
 
+    public ImageView addImageToButton(String stringPathToResourse) throws IOException {
 
+        ImageView imageView = null;
+        InputStream input = null;
+        try {
+            input = getClass().getResourceAsStream(stringPathToResourse);
+            Image image = new Image(input);
+            imageView = new ImageView(image);
+        } catch (Exception ex) {
+            System.out.println("Произошла ошибка с файлом изображения !\nВозможно он где-то потерялся!\n");
+        }
+        finally {
+            if (input != null) { input.close(); }
+        }
+        return imageView;
+    }
 
 }
