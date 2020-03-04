@@ -9,15 +9,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlowerStore extends BorderPane {
+
+private Flowers Rose;
+private Flowers Chamomile;
+private Flowers Tulip;
 
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
@@ -25,6 +30,7 @@ private Button buttonBouquetBeautiful;
 private int walletFlowerStore = 0;
 private Label pictureFlowers;
 private Button buttonEmptyWallet;
+
 
 FlowerStore() {
 
@@ -102,7 +108,11 @@ FlowerStore() {
 
         buttonEmptyWallet.setOnAction(e -> {
                     try {
-
+                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
+                        flowersList.add(new Rose());
+                        flowersList.add(new Chamomile());
+                        flowersList.add(new Tulip());
+                        System.out.println(flowersList);
                     } catch (Exception ignored) {
                     }
         }
@@ -178,5 +188,41 @@ FlowerStore() {
 
         return integerValue;
     }
+
+
+
+public abstract class Flowers {
+}
+
+
+public class Rose extends Flowers {
+
+public int priceOfFlower = 100;
+public int getPriceOfFlower() { return this.priceOfFlower; };
+
+@Override
+public String toString() { return "Rose"; }
+}
+
+
+public class Chamomile extends Flowers {
+
+public int priceOfFlower = 70;
+public int getPriceOfFlower() { return this.priceOfFlower; };
+
+@Override
+public String toString() { return "Chamomile"; }
+}
+
+
+public class Tulip extends Flowers {
+
+public int priceOfFlower = 45;
+public int getPriceOfFlower() { return this.priceOfFlower; };
+
+@Override
+public String toString() { return "Tulip"; }
+}
+
 
 }
