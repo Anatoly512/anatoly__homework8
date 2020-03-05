@@ -24,13 +24,17 @@ public class FlowerStore extends BorderPane {
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
 
-private TextField amountOfRoses;
-private TextField amountOfChamomile;
-private TextField amountOfTulips;
+private TextField amountOfRosesTextField;
+private TextField amountOfChamomileTextField;
+private TextField amountOfTulipsTextField;
 
 private Label enterAmountOfRoses;
 private Label enterAmountOfChamomile;
 private Label enterAmountOfTulips;
+
+private int amountOfRoses;
+private int amountOfChamomile;
+private int amountOfTulips;
 
 private static long walletFlowerStore = 0L;
 private Label walletFlowerStoreLabel;
@@ -42,9 +46,9 @@ FlowerStore() {
     this.buttonBouquetUsual = new Button(" Обычный букет !");
     this.buttonBouquetBeautiful = new Button(" Красивый букет !");
 
-    this.amountOfRoses = new TextField();
-    this.amountOfChamomile = new TextField();
-    this.amountOfTulips = new TextField();
+    this.amountOfRosesTextField = new TextField();
+    this.amountOfChamomileTextField = new TextField();
+    this.amountOfTulipsTextField = new TextField();
 
     this.enterAmountOfRoses = new Label ("     Количество роз  :              ");
     this.enterAmountOfChamomile = new Label ("     Количество ромашек  :     ");
@@ -104,7 +108,11 @@ FlowerStore() {
 
         buttonBouquetUsual.setOnAction(e -> {
                     try {
-                        System.out.println(sell(1,2,3));
+                        amountOfRoses = convertTextToInt(primaryStage, amountOfRosesTextField);
+                        amountOfChamomile = convertTextToInt(primaryStage, amountOfChamomileTextField);
+                        amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
+
+                        System.out.println(sell(amountOfRoses, amountOfChamomile, amountOfTulips));
 
                         walletFlowerStore = walletFlowerStore + 100;
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
@@ -116,10 +124,13 @@ FlowerStore() {
 
         buttonBouquetBeautiful.setOnAction(e -> {
                     try {
+                        amountOfRoses = convertTextToInt(primaryStage, amountOfRosesTextField);
+                        amountOfChamomile = convertTextToInt(primaryStage, amountOfChamomileTextField);
+                        amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
+
                         List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
-                        flowersList.add(new Rose());
-                        flowersList.add(new Chamomile());
-                        flowersList.add(new Tulip());
+                        flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);
+
                         System.out.println(flowersList);
                         System.out.println(flowersList.get(0).getPriceOfFlower());
                         System.out.println(flowersList.get(1).getPriceOfFlower());
@@ -138,26 +149,27 @@ FlowerStore() {
                         if (walletFlowerStore == 0) {return;}
                         walletFlowerStore = 0;
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
+
                         System.out.println("\nВы только что раздали все деньги магазина бедным !");
-                        System.out.println("О вас написали в новостях !!!");
+                        System.out.println("О вас написали в новостях !!!\n");
                     } catch (Exception ignored) {
                     }
         }
         );
 
 
-        VBox vbox0 = new VBox();
+        VBox vbox0 = new VBox();  //  Нужен для отступа сверху
         vbox0.getChildren().addAll(new Label("                                                 \n\n"));
 
         HBox hbox0 = new HBox(new Label(" На счету магазина  :  "), walletFlowerStoreLabel);
         hbox0.getChildren().addAll(new Label("  \n\n"));
 
         HBox hbox1 = new HBox();
-        hbox1.getChildren().addAll(enterAmountOfRoses, amountOfRoses);
+        hbox1.getChildren().addAll(enterAmountOfRoses, amountOfRosesTextField);
         HBox hbox2 = new HBox();
-        hbox2.getChildren().addAll(enterAmountOfChamomile, amountOfChamomile);
+        hbox2.getChildren().addAll(enterAmountOfChamomile, amountOfChamomileTextField);
         HBox hbox3 = new HBox();
-        hbox3.getChildren().addAll(enterAmountOfTulips, amountOfTulips);
+        hbox3.getChildren().addAll(enterAmountOfTulips, amountOfTulipsTextField);
 
         centerPane.add(vbox0, 2, 1);
         centerPane.add(hbox0, 2, 2);         //  Вывод счета магазина на экран
@@ -204,11 +216,10 @@ FlowerStore() {
 
 
 
-    public Integer convertTextToInteger (Stage primaryStage, TextField TextString) {
-        Integer integerValue;
+    public int convertTextToInt (Stage primaryStage, TextField textString) {
         int value = 0;
 
-        String StringToConvert = TextString.getText();
+        String StringToConvert = textString.getText();
 
         try {
             value = Integer.parseInt(StringToConvert);
@@ -225,28 +236,49 @@ FlowerStore() {
 
         if (value > 500) {
             value = 500;      //  Все же количество цветов в магазине ограничено размером помещения
+            System.out.println("У нас в магазине нет столько цветов !");
+            System.out.println("Алло, Голландия?!... Нам нужно все, что у вас растет!!!\n");
         }
 
-        integerValue = (Integer) (value);
-
-        return integerValue;
+        return value;
     }
 
 
 
-
-
     public List<Flowers> sell (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+
         List<Flowers> flowersList = new ArrayList<>();   //  создание букета
-        flowersList.add(new Rose());
-        flowersList.add(new Rose());
-        flowersList.add(new Chamomile());
-        flowersList.add(new Chamomile());
-        flowersList.add(new Tulip());
-        flowersList.add(new Tulip());
+
+        for (int i = 0; i < amountOfRoses; i++) {
+            flowersList.add(new Rose());
+        }
+
+        for (int i = 0; i < amountOfChamomile; i++) {
+            flowersList.add(new Chamomile());
+        }
+
+        for (int i = 0; i < amountOfTulips; i++) {
+            flowersList.add(new Tulip());
+        }
 
     return flowersList;
 }
+
+
+    public List<Flowers> sellSequence (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+
+        List<Flowers> flowersList = new ArrayList<>();   //  создание букета
+
+
+        return flowersList;
+    }
+
+
+    private int getPriceOfThisBouquet(List<Flowers> flowersList) {
+        int price = 0;
+
+        return price;
+    }
 
 
 
