@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -23,8 +24,15 @@ public class FlowerStore extends BorderPane {
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
 
-private int walletFlowerStore = 0;
-private Label pictureFlowers;
+private TextField amountOfRoses;
+private TextField amountOfChamomile;
+private TextField amountOfTulips;
+
+private Label enterAmountOfRoses;
+private Label enterAmountOfChamomile;
+private Label enterAmountOfTulips;
+
+private long walletFlowerStore = 0;
 private Button buttonEmptyWallet;
 
 
@@ -33,7 +41,14 @@ FlowerStore() {
     this.buttonBouquetUsual = new Button(" Обычный букет !");
     this.buttonBouquetBeautiful = new Button(" Красивый букет !");
 
-    this.pictureFlowers = new Label ();
+    this.amountOfRoses = new TextField();
+    this.amountOfChamomile = new TextField();
+    this.amountOfTulips = new TextField();
+
+    this.enterAmountOfRoses = new Label (" Количество роз :");
+    this.enterAmountOfChamomile = new Label (" Количество ромашек :");
+    this.enterAmountOfTulips = new Label (" Количество тюльпанов :");
+
     this.buttonEmptyWallet = new Button("Очистить счет");
 }
 
@@ -122,9 +137,14 @@ FlowerStore() {
         VBox vbox0 = new VBox();
         vbox0.getChildren().addAll(new Label("                     \n\n"));
 
+        HBox hbox1 = new HBox();
+        HBox hbox2 = new HBox();
+        HBox hbox3 = new HBox();
+
         centerPane.add(vbox0, 2, 1);
         centerPane.add(new Label("            \n\n\n"), 3, 2);
         centerPane.add(buttonBouquetUsual, 5,3);   //  Вывод кнопок <букетов> на экран
+
         centerPane.add(new Label("            \n\n"), 4, 5);
         centerPane.add(new Label("            \n\n"), 4, 8);
         centerPane.add(buttonBouquetBeautiful, 5,10);
