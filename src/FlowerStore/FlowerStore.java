@@ -195,7 +195,7 @@ FlowerStore() {
 
         root.setCenter(centerPane);
 
-        primaryStage.setTitle("Flower Menu ");
+        primaryStage.setTitle("Flowers Menu ");
         primaryStage.setScene(new Scene(root, 890, 550));
         primaryStage.centerOnScreen();
         primaryStage.show();
