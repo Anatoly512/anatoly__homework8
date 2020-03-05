@@ -20,10 +20,6 @@ import java.util.List;
 
 public class FlowerStore extends BorderPane {
 
-private Flowers Rose;
-private Flowers Chamomile;
-private Flowers Tulip;
-
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
 
@@ -99,7 +95,14 @@ FlowerStore() {
 
         buttonBouquetBeautiful.setOnAction(e -> {
                     try {
-
+                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
+                        flowersList.add(new Rose());
+                        flowersList.add(new Chamomile());
+                        flowersList.add(new Tulip());
+                        System.out.println(flowersList);
+                        System.out.println(flowersList.get(0).getPriceOfFlower());
+                        System.out.println(flowersList.get(1).getPriceOfFlower());
+                        System.out.println(flowersList.get(2).getPriceOfFlower());
                     } catch (Exception ignored) {
                     }
                 }
@@ -108,11 +111,8 @@ FlowerStore() {
 
         buttonEmptyWallet.setOnAction(e -> {
                     try {
-                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
-                        flowersList.add(new Rose());
-                        flowersList.add(new Chamomile());
-                        flowersList.add(new Tulip());
-                        System.out.println(flowersList);
+                        if (walletFlowerStore == 0) {return;}
+
                     } catch (Exception ignored) {
                     }
         }
@@ -190,38 +190,40 @@ FlowerStore() {
     }
 
 
+//  Внутренние классы цветов
 
 public abstract class Flowers {
+ public abstract int getPriceOfFlower();
 }
 
 
 public class Rose extends Flowers {
 
-public int priceOfFlower = 100;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+ public int priceOfFlower = 100;
+ public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Rose"; }
+ @Override
+ public String toString() { return "Rose"; }
 }
 
 
 public class Chamomile extends Flowers {
 
-public int priceOfFlower = 70;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+ public int priceOfFlower = 70;
+ public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Chamomile"; }
+ @Override
+ public String toString() { return "Chamomile"; }
 }
 
 
 public class Tulip extends Flowers {
 
-public int priceOfFlower = 45;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+ public int priceOfFlower = 45;
+ public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Tulip"; }
+ @Override
+ public String toString() { return "Tulip"; }
 }
 
 
