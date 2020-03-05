@@ -138,6 +138,12 @@ FlowerStore() {
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
                         System.out.println(flowersList);
+
+                        //  Test
+                        System.out.println("\n");
+                        FlowersSaver.save("c://Java/", flowersList);
+                        System.out.println(FlowersLoader.load("c://Java/"));
+
                     } catch (Exception ignored) {
                     }
                 }
@@ -216,7 +222,7 @@ FlowerStore() {
 
 
 
-    public int convertTextToInt (Stage primaryStage, TextField textString) {
+    public int convertTextToInt(Stage primaryStage, TextField textString) {
         int value = 0;
 
         String StringToConvert = textString.getText();
@@ -245,7 +251,7 @@ FlowerStore() {
 
 
 
-    public List<Flowers> sell (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+    public List<Flowers> sell(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
 
         List<Flowers> flowersList = new ArrayList<>();   //  создание букета
 
@@ -265,7 +271,7 @@ FlowerStore() {
 }
 
 
-    public List<Flowers> sellSequence (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+    public List<Flowers> sellSequence(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
 
         List<Flowers> flowersList = new ArrayList<>();
         int maxAmountOfFlowers;
