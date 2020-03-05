@@ -112,10 +112,13 @@ FlowerStore() {
                         amountOfChamomile = convertTextToInt(primaryStage, amountOfChamomileTextField);
                         amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
 
-                        System.out.println(sell(amountOfRoses, amountOfChamomile, amountOfTulips));
+                        List<Flowers> flowersList;
+                        flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);
 
-                        walletFlowerStore = walletFlowerStore + 100;
+                        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
+
+                        System.out.println(flowersList);
                     } catch (Exception ignored) {
                     }
                 }
@@ -128,16 +131,13 @@ FlowerStore() {
                         amountOfChamomile = convertTextToInt(primaryStage, amountOfChamomileTextField);
                         amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
 
-                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
-                        flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);
+                        List<Flowers> flowersList;
+                        flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);  //  Заменить на  sellSequence
+
+                        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
+                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
                         System.out.println(flowersList);
-                        System.out.println(flowersList.get(0).getPriceOfFlower());
-                        System.out.println(flowersList.get(1).getPriceOfFlower());
-                        System.out.println(flowersList.get(2).getPriceOfFlower());
-
-                        walletFlowerStore = walletFlowerStore + 100;
-                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
                     } catch (Exception ignored) {
                     }
                 }
@@ -190,7 +190,7 @@ FlowerStore() {
         root.setCenter(centerPane);
 
         primaryStage.setTitle("Flower Menu ");
-        primaryStage.setScene(new Scene(root, 850, 550));
+        primaryStage.setScene(new Scene(root, 890, 580));
         primaryStage.centerOnScreen();
         primaryStage.show();
 
@@ -276,6 +276,10 @@ FlowerStore() {
 
     private int getPriceOfThisBouquet(List<Flowers> flowersList) {
         int price = 0;
+
+        for (Flowers flowers : flowersList) {
+            price = price + flowers.getPriceOfFlower();
+        }
 
         return price;
     }
