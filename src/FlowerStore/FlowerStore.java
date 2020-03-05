@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -20,15 +21,19 @@ import java.util.List;
 
 public class FlowerStore extends BorderPane {
 
-private Flowers Rose;
-private Flowers Chamomile;
-private Flowers Tulip;
-
 private Button buttonBouquetUsual;
 private Button buttonBouquetBeautiful;
 
-private int walletFlowerStore = 0;
-private Label pictureFlowers;
+private TextField amountOfRoses;
+private TextField amountOfChamomile;
+private TextField amountOfTulips;
+
+private Label enterAmountOfRoses;
+private Label enterAmountOfChamomile;
+private Label enterAmountOfTulips;
+
+private static long walletFlowerStore = 0L;
+private Label walletFlowerStoreLabel;
 private Button buttonEmptyWallet;
 
 
@@ -37,7 +42,15 @@ FlowerStore() {
     this.buttonBouquetUsual = new Button(" Обычный букет !");
     this.buttonBouquetBeautiful = new Button(" Красивый букет !");
 
-    this.pictureFlowers = new Label ();
+    this.amountOfRoses = new TextField();
+    this.amountOfChamomile = new TextField();
+    this.amountOfTulips = new TextField();
+
+    this.enterAmountOfRoses = new Label ("     Количество роз  :              ");
+    this.enterAmountOfChamomile = new Label ("     Количество ромашек  :     ");
+    this.enterAmountOfTulips = new Label ("     Количество тюльпанов  :  ");
+
+    this.walletFlowerStoreLabel = new Label (String.valueOf(walletFlowerStore));
     this.buttonEmptyWallet = new Button("Очистить счет");
 }
 
@@ -91,15 +104,29 @@ FlowerStore() {
 
         buttonBouquetUsual.setOnAction(e -> {
                     try {
+                        System.out.println(sell(1,2,3));
 
+                        walletFlowerStore = walletFlowerStore + 100;
+                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
                     } catch (Exception ignored) {
                     }
                 }
         );
 
+
         buttonBouquetBeautiful.setOnAction(e -> {
                     try {
+                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
+                        flowersList.add(new Rose());
+                        flowersList.add(new Chamomile());
+                        flowersList.add(new Tulip());
+                        System.out.println(flowersList);
+                        System.out.println(flowersList.get(0).getPriceOfFlower());
+                        System.out.println(flowersList.get(1).getPriceOfFlower());
+                        System.out.println(flowersList.get(2).getPriceOfFlower());
 
+                        walletFlowerStore = walletFlowerStore + 100;
+                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
                     } catch (Exception ignored) {
                     }
                 }
@@ -108,11 +135,11 @@ FlowerStore() {
 
         buttonEmptyWallet.setOnAction(e -> {
                     try {
-                        List<Flowers> flowersList = new ArrayList<>();   //  Тест (создание букета)
-                        flowersList.add(new Rose());
-                        flowersList.add(new Chamomile());
-                        flowersList.add(new Tulip());
-                        System.out.println(flowersList);
+                        if (walletFlowerStore == 0) {return;}
+                        walletFlowerStore = 0;
+                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
+                        System.out.println("\nВы только что раздали все деньги магазина бедным !");
+                        System.out.println("О вас написали в новостях !!!");
                     } catch (Exception ignored) {
                     }
         }
@@ -120,17 +147,33 @@ FlowerStore() {
 
 
         VBox vbox0 = new VBox();
-        vbox0.getChildren().addAll(new Label("                     \n\n"));
+        vbox0.getChildren().addAll(new Label("                                                 \n\n"));
+
+        HBox hbox0 = new HBox(new Label(" На счету магазина  :  "), walletFlowerStoreLabel);
+        hbox0.getChildren().addAll(new Label("  \n\n"));
+
+        HBox hbox1 = new HBox();
+        hbox1.getChildren().addAll(enterAmountOfRoses, amountOfRoses);
+        HBox hbox2 = new HBox();
+        hbox2.getChildren().addAll(enterAmountOfChamomile, amountOfChamomile);
+        HBox hbox3 = new HBox();
+        hbox3.getChildren().addAll(enterAmountOfTulips, amountOfTulips);
 
         centerPane.add(vbox0, 2, 1);
-        centerPane.add(new Label("            \n\n\n"), 3, 2);
+        centerPane.add(hbox0, 2, 2);         //  Вывод счета магазина на экран
         centerPane.add(buttonBouquetUsual, 5,3);   //  Вывод кнопок <букетов> на экран
-        centerPane.add(new Label("            \n\n"), 4, 5);
+
+        centerPane.add(new Label("            \n\n"), 4, 4);
+        centerPane.add(hbox1, 12, 5);      //  Вывод полей <количества цветов> на экран
+        centerPane.add(hbox2, 12, 6);
+        centerPane.add(hbox3, 12, 7);
         centerPane.add(new Label("            \n\n"), 4, 8);
         centerPane.add(buttonBouquetBeautiful, 5,10);
 
-        centerPane.add(new Label("            \n\n\n\n\n\n\n"), 4, 13);
-        centerPane.add(buttonEmptyWallet, 18,15);   //  Вывод кнопки обнуления счета на экран
+        VBox vbox1 = new VBox();
+        vbox1.getChildren().addAll(new Label("  \n\n"), buttonEmptyWallet);
+        centerPane.add(vbox1, 12,12);   //  Вывод кнопки обнуления счета на экран
+
 
         root.setCenter(centerPane);
 
@@ -191,37 +234,58 @@ FlowerStore() {
 
 
 
+
+
+    public List<Flowers> sell (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+        List<Flowers> flowersList = new ArrayList<>();   //  создание букета
+        flowersList.add(new Rose());
+        flowersList.add(new Rose());
+        flowersList.add(new Chamomile());
+        flowersList.add(new Chamomile());
+        flowersList.add(new Tulip());
+        flowersList.add(new Tulip());
+
+    return flowersList;
+}
+
+
+
+//  Внутренние классы цветов
+
 public abstract class Flowers {
+  public abstract int getPriceOfFlower();
 }
 
 
 public class Rose extends Flowers {
 
-public int priceOfFlower = 100;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+  public int priceOfFlower = 100;
+  public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Rose"; }
+  @Override
+  public String toString() { return "Rose"; }
 }
+
 
 
 public class Chamomile extends Flowers {
 
-public int priceOfFlower = 70;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+  public int priceOfFlower = 70;
+  public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Chamomile"; }
+  @Override
+  public String toString() { return "Chamomile"; }
 }
+
 
 
 public class Tulip extends Flowers {
 
-public int priceOfFlower = 45;
-public int getPriceOfFlower() { return this.priceOfFlower; };
+  public int priceOfFlower = 45;
+  public int getPriceOfFlower() { return this.priceOfFlower; };
 
-@Override
-public String toString() { return "Tulip"; }
+  @Override
+  public String toString() { return "Tulip"; }
 }
 
 
