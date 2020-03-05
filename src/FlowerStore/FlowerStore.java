@@ -61,7 +61,7 @@ FlowerStore() {
 
     public void choiceOfFlowers(Stage primaryStage) {
 
-        System.out.println("Flower Menu!");
+        System.out.println("\nFlower Menu!");
 
         BorderPane root = new BorderPane();
         GridPane centerPane = new GridPane();
@@ -132,7 +132,7 @@ FlowerStore() {
                         amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
 
                         List<Flowers> flowersList;
-                        flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);  //  Заменить на  sellSequence
+                        flowersList = sellSequence(amountOfRoses, amountOfChamomile, amountOfTulips);  // букет с чередующимися цветами
 
                         walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
@@ -190,7 +190,7 @@ FlowerStore() {
         root.setCenter(centerPane);
 
         primaryStage.setTitle("Flower Menu ");
-        primaryStage.setScene(new Scene(root, 890, 580));
+        primaryStage.setScene(new Scene(root, 890, 550));
         primaryStage.centerOnScreen();
         primaryStage.show();
 
@@ -236,8 +236,8 @@ FlowerStore() {
 
         if (value > 500) {
             value = 500;      //  Все же количество цветов в магазине ограничено размером помещения
-            System.out.println("У нас в магазине нет столько цветов !");
-            System.out.println("Алло, Голландия?!... Нам нужно все, что у вас растет!!!\n");
+            System.out.println("\nУ нас в магазине нет столько цветов !");
+            System.out.println("Алло, Голландия?!... Присылайте все, что у вас растет!!!\n");
         }
 
         return value;
@@ -267,11 +267,37 @@ FlowerStore() {
 
     public List<Flowers> sellSequence (int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
 
-        List<Flowers> flowersList = new ArrayList<>();   //  создание букета
+        List<Flowers> flowersList = new ArrayList<>();
+        int maxAmountOfFlowers;
 
+        if (amountOfRoses > amountOfChamomile)  { maxAmountOfFlowers = amountOfRoses; }
+        else maxAmountOfFlowers = amountOfChamomile;
+
+        if (maxAmountOfFlowers < amountOfTulips) { maxAmountOfFlowers = amountOfTulips; }
+
+
+        for (int i = 0; i < maxAmountOfFlowers; i++) {   //  создание букета с чередующимися цветами
+
+            if (amountOfRoses > 0) {
+                flowersList.add(new Rose());
+                amountOfRoses--;
+            }
+
+            if (amountOfChamomile > 0) {
+                flowersList.add(new Chamomile());
+                amountOfChamomile--;
+            }
+
+            if (amountOfTulips > 0) {
+                flowersList.add(new Tulip());
+                amountOfTulips--;
+            }
+
+        }
 
         return flowersList;
     }
+
 
 
     private int getPriceOfThisBouquet(List<Flowers> flowersList) {
