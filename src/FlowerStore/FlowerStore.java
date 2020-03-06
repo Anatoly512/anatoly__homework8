@@ -194,18 +194,18 @@ FlowerStore() {
 
     }
 
-    
+
     private void showBouquetOnScreen(List<Flowers> flowersList) throws Exception {
 
-        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
+        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);       //  Пополнение счета магазина
         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
-        System.out.println("\n" + flowersList);    //  Обычный вывод букета на экран
+        System.out.println("\n" + FlowersLoader.bouquetToScreen(String.valueOf(flowersList)));     //  Вывод букета на экран
 
-        FlowersSaver.save("save_flowerlist.txt", flowersList);
+        FlowersSaver.save("save_flowerlist.txt", flowersList);     //  Запись в файл
 
         System.out.println("\nВывод букета на экран из файла : ");
-        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
+        System.out.println(FlowersLoader.bouquetToScreen(String.valueOf(FlowersLoader.load("save_flowerlist.txt"))));
 
     }
 

@@ -17,17 +17,9 @@ private FlowersLoader() {      //  private конструктор делает �
         try {
             FileReader reader = new FileReader(pathToFile);
             Scanner scan = new Scanner(reader);
-            String line = scan.nextLine();
+            String bouquet = scan.nextLine();
 
-            StringBuffer sb1 = new StringBuffer(line);
-            sb1.delete((line.length())-1, line.length());
-            line = String.valueOf(sb1);
-
-            StringBuffer sb2 = new StringBuffer(line);
-            sb2.delete(0, 1);
-            line = String.valueOf(sb2);
-
-            flowersList.add((T) line);
+            flowersList.add((T) bouquetToScreen(bouquet));
 
             reader.close();
         }
@@ -37,6 +29,21 @@ private FlowersLoader() {      //  private конструктор делает �
 
         return flowersList;
     }
+
+
+    public static String bouquetToScreen(String bouquet) {         //  public так как этот метод вызывется из другого класса
+
+        StringBuffer sb1 = new StringBuffer(bouquet);
+        sb1.delete((bouquet.length()-1), bouquet.length());
+        bouquet = String.valueOf(sb1);
+
+        StringBuffer sb2 = new StringBuffer(bouquet);
+        sb2.delete(0, 1);
+        bouquet = String.valueOf(sb2);
+
+    return bouquet;
+    }
+
 
 }
 
