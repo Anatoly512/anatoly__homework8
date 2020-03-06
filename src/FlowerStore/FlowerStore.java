@@ -102,7 +102,7 @@ FlowerStore() {
         this.buttonBouquetUsual.setGraphic(addImageToButton("resourses/button_flowers_usual.png"));
         this.buttonBouquetBeautiful.setGraphic(addImageToButton("resourses/button_flowers.png"));
         }
-        catch (Exception ignored) {  //  <ignored>  потому что в методе addImageToButton уже есть обработчик исключений
+        catch (Exception ignored) {  //  в методе addImageToButton уже есть обработчик исключений
         }
 
 
@@ -115,14 +115,28 @@ FlowerStore() {
                         List<Flowers> flowersList;
                         flowersList = sell(amountOfRoses, amountOfChamomile, amountOfTulips);
 
+                        showBouquetOnScreen(flowersList);
+
+/*
                         walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
-                        System.out.println(flowersList);
+                        System.out.println("\n" + flowersList);
+
+                        FlowersSaver.save("save_flowerlist.txt", flowersList);
+
+                        System.out.println("\nВывод букета на экран из файла : ");
+                        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
+
+ */
+
                     } catch (Exception ignored) {
                     }
+
                 }
+
         );
+
 
 
         buttonBouquetBeautiful.setOnAction(e -> {
@@ -134,15 +148,19 @@ FlowerStore() {
                         List<Flowers> flowersList;
                         flowersList = sellSequence(amountOfRoses, amountOfChamomile, amountOfTulips);  // букет с чередующимися цветами
 
+                        showBouquetOnScreen(flowersList);
+
+/*
                         walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
                         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
-                        System.out.println(flowersList);
+                        System.out.println("\n" + flowersList);
 
-                        //  Test
-                        System.out.println("\n");
-                        FlowersSaver.save("c://Java/", flowersList);
-                        System.out.println(FlowersLoader.load("c://Java/"));
+                        FlowersSaver.save("save_flowerlist.txt", flowersList);
+
+                        System.out.println("\nВывод букета на экран из файла : ");
+                        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
+ */
 
                     } catch (Exception ignored) {
                     }
@@ -158,7 +176,8 @@ FlowerStore() {
 
                         System.out.println("\nВы только что раздали все деньги магазина бедным !");
                         System.out.println("О вас написали в новостях !!!\n");
-                    } catch (Exception ignored) {
+                    }
+                    catch (Exception ignored) {
                     }
         }
         );
@@ -195,10 +214,25 @@ FlowerStore() {
 
         root.setCenter(centerPane);
 
-        primaryStage.setTitle("Flower Menu ");
+        primaryStage.setTitle("Flowers Menu ");
         primaryStage.setScene(new Scene(root, 890, 550));
         primaryStage.centerOnScreen();
         primaryStage.show();
+
+    }
+
+    
+    private void showBouquetOnScreen(List<Flowers> flowersList) throws Exception {
+
+        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
+        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
+
+        System.out.println("\n" + flowersList);
+
+        FlowersSaver.save("save_flowerlist.txt", flowersList);
+
+        System.out.println("\nВывод букета на экран из файла : ");
+        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
 
     }
 
@@ -222,7 +256,7 @@ FlowerStore() {
 
 
 
-    public int convertTextToInt(Stage primaryStage, TextField textString) {
+    private int convertTextToInt(Stage primaryStage, TextField textString) {
         int value = 0;
 
         String StringToConvert = textString.getText();
@@ -243,7 +277,7 @@ FlowerStore() {
         if (value > 500) {
             value = 500;      //  Все же количество цветов в магазине ограничено размером помещения
             System.out.println("\nУ нас в магазине нет столько цветов !");
-            System.out.println("Алло, Голландия?!... Присылайте все, что у вас растет!!!\n");
+            System.out.println("Алло, Голландия?!... Присылайте все, что у вас растет!!!");
         }
 
         return value;
@@ -251,7 +285,7 @@ FlowerStore() {
 
 
 
-    public List<Flowers> sell(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+    private List<Flowers> sell(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
 
         List<Flowers> flowersList = new ArrayList<>();   //  создание букета
 
@@ -271,7 +305,7 @@ FlowerStore() {
 }
 
 
-    public List<Flowers> sellSequence(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
+    private List<Flowers> sellSequence(int amountOfRoses, int amountOfChamomile, int amountOfTulips) {
 
         List<Flowers> flowersList = new ArrayList<>();
         int maxAmountOfFlowers;
@@ -320,14 +354,14 @@ FlowerStore() {
 
 //  Внутренние классы цветов
 
-public abstract class Flowers {
+private abstract class Flowers {
   public abstract int getPriceOfFlower();
 }
 
 
-public class Rose extends Flowers {
+private class Rose extends Flowers {
 
-  public int priceOfFlower = 100;
+  private int priceOfFlower = 100;
   public int getPriceOfFlower() { return this.priceOfFlower; };
 
   @Override
@@ -336,9 +370,9 @@ public class Rose extends Flowers {
 
 
 
-public class Chamomile extends Flowers {
+private class Chamomile extends Flowers {
 
-  public int priceOfFlower = 70;
+  private int priceOfFlower = 70;
   public int getPriceOfFlower() { return this.priceOfFlower; };
 
   @Override
@@ -347,9 +381,9 @@ public class Chamomile extends Flowers {
 
 
 
-public class Tulip extends Flowers {
+private class Tulip extends Flowers {
 
-  public int priceOfFlower = 45;
+  private int priceOfFlower = 45;
   public int getPriceOfFlower() { return this.priceOfFlower; };
 
   @Override
