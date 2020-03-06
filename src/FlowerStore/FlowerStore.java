@@ -37,6 +37,7 @@ private int amountOfChamomile;
 private int amountOfTulips;
 
 private static long walletFlowerStore = 0L;
+
 private Label walletFlowerStoreLabel;
 private Button buttonEmptyWallet;
 
@@ -117,26 +118,10 @@ FlowerStore() {
 
                         showBouquetOnScreen(flowersList);
 
-/*
-                        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
-                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
-
-                        System.out.println("\n" + flowersList);
-
-                        FlowersSaver.save("save_flowerlist.txt", flowersList);
-
-                        System.out.println("\nВывод букета на экран из файла : ");
-                        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
-
- */
-
                     } catch (Exception ignored) {
                     }
-
-                }
-
+              }
         );
-
 
 
         buttonBouquetBeautiful.setOnAction(e -> {
@@ -146,25 +131,13 @@ FlowerStore() {
                         amountOfTulips = convertTextToInt(primaryStage, amountOfTulipsTextField);
 
                         List<Flowers> flowersList;
-                        flowersList = sellSequence(amountOfRoses, amountOfChamomile, amountOfTulips);  // букет с чередующимися цветами
+                        flowersList = sellSequence(amountOfRoses, amountOfChamomile, amountOfTulips);    // букет с чередующимися цветами
 
                         showBouquetOnScreen(flowersList);
 
-/*
-                        walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
-                        walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
-
-                        System.out.println("\n" + flowersList);
-
-                        FlowersSaver.save("save_flowerlist.txt", flowersList);
-
-                        System.out.println("\nВывод букета на экран из файла : ");
-                        System.out.println(FlowersLoader.load("save_flowerlist.txt"));
- */
-
                     } catch (Exception ignored) {
                     }
-                }
+              }
         );
 
 
@@ -227,7 +200,7 @@ FlowerStore() {
         walletFlowerStore = walletFlowerStore + getPriceOfThisBouquet(flowersList);
         walletFlowerStoreLabel.setText(String.valueOf(walletFlowerStore));
 
-        System.out.println("\n" + flowersList);
+        System.out.println("\n" + flowersList);    //  Обычный вывод букета на экран
 
         FlowersSaver.save("save_flowerlist.txt", flowersList);
 
